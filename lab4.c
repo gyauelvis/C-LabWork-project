@@ -70,7 +70,7 @@ int main()
         int toppings = 0;
         do
         {
-            printf("1-Sprinkles \n 2-Whipped cream\n 3-Chopped Nuts \n 4-Coconut Shavings \n 5-No\n");
+            printf("1-Sprinkles \n2-Whipped cream\n3-Chopped Nuts \n4-Coconut Shavings \n5-No\n");
             scanf("%d", &topping);
 
             if (topping == 1 || topping == 2 || topping == 3 || topping == 4)
@@ -89,7 +89,7 @@ int main()
             {
                 printf("Invalid Toppings Entry\n");
             };
-            printf("Would you like anything else \? \n 1-Yes 2-No \n");
+            printf("Would you like anything else \? \n1-Yes 2-No \n");
             scanf("%d", &anythingElse);
             if (anythingElse == 1)
             {
@@ -98,7 +98,7 @@ int main()
             else
             {
                 order = 0;
-                printf("Total Cost: %f", cost);
+                printf("Total Cost: %.2f\n", cost);
                 printf("Waiting Time: %d", time);
             };
             printf("Kindly Wait for your order");
