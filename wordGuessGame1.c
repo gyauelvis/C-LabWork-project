@@ -5,6 +5,7 @@
 
 int num_clues;
 int difficulty;
+int numberOfGivenOut = 0;
 
 int play_game(int difficulty);
 char *get_word(int difficulty);
@@ -57,7 +58,7 @@ int play_game(int difficulty)
         difficultyLevel = "Hard";
     }
 
-    printf("You have selected the %s level and you have %d clues to guess the correct word.\n", difficultyLevel, num_clues);
+    printf("\nYou have selected the %s level and you have %d clues to guess the correct word.\n", difficultyLevel, num_clues);
     char *word = get_word(difficulty);
     print_clues(word, num_clues, clue_list);
     return 0;
@@ -97,13 +98,24 @@ void print_clues(char *word, int numberOfClues, char **clueList)
     printf("Clues:\n");
     while (numberOfClues > 0)
     {
-        printf("%s '%c'\n Enter the word: ", clueList[i], word[j]);
+        printf("%s '%c'\nEnter the word: ", clueList[i], word[j]);
         scanf("%s", answer);
         int verification = verifyAnswer(answer, word);
         if (verification == 1)
         {
             printf("Right Guess\n");
-            play_game(difficulty);
+            numberOfGivenOut++;
+            if (numberOfGivenOut > 3)
+            {
+                numberOfGivenOut = 0;
+                difficulty++;
+                if (difficulty > 3)
+                {
+                    printf("END");
+                    break;
+                };
+                play_game(difficulty);
+            }
             break;
         }
         i++;
@@ -116,12 +128,12 @@ int verifyAnswer(char *user_answer, char *correct_answer)
 {
     if (strcmp(correct_answer, user_answer) == 0)
     {
-        printf("Correct answer\n");
+        printf("\nCorrect answer\n");
         return 1;
     }
     else
     {
-        printf("Wrong answer\n");
+        printf("\nWrong answer\n");
         return 0;
     }
 }
