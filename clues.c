@@ -1,26 +1,5 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
-
-int num_clues;
-int difficulty;
-int score = 0;
-int numberOfWordsGivenOut = 0;
-int numberOfTrials = 0;
-int index;
-int choice;
-
-int play_game(int difficulty);
-char *get_word(int difficulty);
-int scoringSystem(int numberOfClues);
-void print_easy_clues(int wordIndex, char *word);
-void print_medium_clues(int wordIndex, char *word);
-void print_hard_clues(int wordIndex, char *word);
-int verifyAnswer(char *user_answer, char *correct_answer);
-
-// Cluess for Easy Words
 char *easy_clues[10][5] = {
+    // Cluess for Easy Words
     {"Large mammal with a long trunk and tusks",
      "Lives in Africa and Asia",
      "Eats grass, leaves, and bark",
@@ -84,7 +63,7 @@ char *easy_clues[10][5] = {
      "It can be used to store intermediate results, input from the user, or any other data needed by the program."}};
 
 // Clues for Medium difficulty level
-char *medium_clues[10][5] = {
+char *medium_clues[] = {
     {"It's a noun used to describe a game or activity that involves solving problems or completing a task.",
      "It can refer to physical jigsaw puzzles, crossword puzzles, or logic puzzles.",
      "It can also refer to a situation that is difficult to understand or solve."
@@ -119,11 +98,13 @@ char *medium_clues[10][5] = {
      "It can also be used metaphorically to describe a situation with alternating or contrasting elements.",
      "It ' s a word derived from Portuguese meaning 'wild ass.'"}};
 
-char *hard_clues[10][4] = {
+// Clues for Hard Diffulty Level
+char *hard_clues[] = {
     {"It' s a term used in art to describe the placement of two contrasting elements together.",
      "It 's also used in literature to create irony or humor.",
      "It can refer to physical placement or a comparison of ideas.",
-     "It' s often used to create a sense of tension or surprise."},
+     "It' s often used to create a sense of tension or surprise.",
+     " It 's a word derived from Latin meaning ' to place next to.'"},
     {"It's an adjective used to describe someone who excessively flatters or obeys others.",
      "It's often used in a negative context to suggest insincerity or manipulation.",
      "It can be used to describe a subservient or overly deferential attitude.",
@@ -164,244 +145,20 @@ char *hard_clues[10][4] = {
      "It's often used to suggest a lack of intention or purpose."
      "It's a word derived from Middle English meaning 'randomly.'"}};
 
-int main()
-{
+// char *obsequious[] = ;
 
-    printf("Welcome to the  game!\n");
-    while (1)
-    {
-        printf("Choose an option:\n");
-        printf("1. Play the game\n");
-        printf("2. How to play the game\n");
-        printf("3. Quit\n");
-        printf("Enter your choice: ");
-        scanf("%d", &choice);
+// char *sycophant[] = ;
 
-        if (choice == 3)
-        {
-            break;
-        }
-        else if (choice == 2)
-        {
-            printf("How to play the game:\n");
-            printf("1. Choose a difficulty level.\n");
-            printf("2. A word will be selected at random and a clue will be given.\n");
-            printf("3. Guess a letter. If it is in the word, it will be revealed.\n");
-            printf("4. If you guess the word before running out of tries, you win.\n");
-            printf("5. If you run out of tries, you lose.\n");
-            continue;
-        }
-        else if (choice != 1)
-        {
-            printf("Invalid choice\n");
-            continue;
-        }
+// char *ubiquitous[] = ;
 
-        int difficulty;
-        printf("Please enter your name: ");
-        char name[100];
-        scanf("%s", name);
-        while (1)
-        {
-            printf("Choose a level:\n");
-            printf("1. Easy\n");
-            printf("2. Medium\n");
-            printf("3. Hard\n");
-            printf("Enter your choice: ");
-            scanf("%d", &difficulty);
-            if (difficulty >= 1 && difficulty <= 3)
-            {
-                play_game(difficulty);
-            }
-            else
-            {
-                printf("Invalid difficulty level. Please try again.\n");
-            }
-        }
-    }
+// char *vexillology[] = ;
 
-    return 0;
-}
+// char *xenophobia[] = ;
 
-char *get_word(int difficulty)
-{
-    char *easy_words[] = {"elephant", "guitar", "rainbow", "bicycle", "pizza", "telescope", "sunflower", "balloon", "variable"};
-    char *medium_words[] = {"puzzle", "octopus", "quartz", "jazz", "memento", "oxygen", "pajama", "pixel", "subway", "zebra"};
-    char *hard_words[] = {"juxtaposition", "obsequious", "sycophant", "ubiquitous", "vexillology", "xenophobia", "yachtsman", "zymurgy", "xylophone", "haphazardly"};
-    int num_words = 10;
-    srand(time(NULL));
-    index = rand() % num_words;
-    char *word;
-    if (difficulty == 1)
-    {
-        word = easy_words[index];
-    }
-    else if (difficulty == 2)
-    {
-        word = medium_words[index];
-    }
-    else
-    {
-        word = hard_words[index];
-    }
-    return word;
-}
+// char *yachtsman[] = ;
 
-int play_game(int difficulty)
-{
-    const char *difficultyLevel;
-    if (difficulty == 1)
-    {
-        num_clues = 5;
-        difficultyLevel = "Easy";
-    }
-    else if (difficulty == 2)
-    {
-        num_clues = 4;
-        difficultyLevel = "Medium";
-    }
-    else if (difficulty == 3)
-    {
-        num_clues = 3;
-        difficultyLevel = "Hard";
-    }
+// char *zymurgy[] = ;
 
-    printf("\nYou have selected the %s level and you have %d clues to guess the correct word.\n", difficultyLevel, num_clues);
-    char *word = get_word(difficulty);
-    if (difficulty == 1)
-    {
-        print_easy_clues(index, word);
-    }
-    else if (difficulty == 2)
-    {
-        print_medium_clues(index, word);
-    }
-    else if (difficulty == 3)
-    {
-        print_hard_clues(index, word);
-    }
-    return 0;
-}
+// char *xylophone[] = ;
 
-void print_easy_clues(int wordIndex, char *word)
-{
-    int numberOfClues = 5;
-    char answer[100];
-    int i = 0;
-    printf("Clues:\n");
-    while (numberOfClues > 0)
-    {
-        printf("%s \nGuess the word: ", easy_clues[wordIndex][i]);
-        numberOfClues--;
-        scanf("%s", answer);
-        int verification = verifyAnswer(answer, word);
-        if (verification == 1)
-        {
-            printf("Right Guess\n");
-            score = scoringSystem(numberOfClues);
-            numberOfWordsGivenOut++;
-            if (numberOfWordsGivenOut < 3)
-            {
-                play_game(difficulty);
-            }
-            else
-            {
-                difficulty++;
-            }
-
-            break;
-        }
-        i++;
-    }
-}
-
-void print_medium_clues(int wordIndex, char *word)
-{
-    int numberOfClues = 4;
-    char answer[100];
-    int i = 0;
-    printf("Clues:\n");
-    while (numberOfClues > 0)
-    {
-        printf("%s \nGuess the word: ", medium_clues[wordIndex][i]);
-        numberOfClues--;
-        scanf("%s", answer);
-        int verification = verifyAnswer(answer, word);
-        if (verification == 1)
-        {
-            printf("Right Guess\n");
-            score = scoringSystem(numberOfClues);
-            numberOfWordsGivenOut++;
-            if (numberOfWordsGivenOut < 3)
-            {
-                play_game(difficulty);
-            }
-            else
-            {
-                difficulty++;
-            }
-
-            break;
-        }
-        i++;
-    }
-}
-void print_hard_clues(int wordIndex, char *word)
-{
-    int numberOfClues = 3;
-    char answer[100];
-    int i = 0;
-    printf("Clues:\n");
-    while (numberOfClues > 0)
-    {
-        printf("%s \nGuess the word: ", hard_clues[wordIndex][i]);
-        numberOfClues--;
-        scanf("%s", answer);
-        int verification = verifyAnswer(answer, word);
-        if (verification == 1)
-        {
-            printf("Right Guess\n");
-            score = scoringSystem(numberOfClues);
-            numberOfWordsGivenOut++;
-            if (numberOfWordsGivenOut < 3)
-            {
-                play_game(difficulty);
-            }
-            else
-            {
-                printf("End");
-            }
-
-            break;
-        }
-        i++;
-    }
-}
-
-int verifyAnswer(char *user_answer, char *correct_answer)
-{
-    if (strcmp(correct_answer, user_answer) == 0)
-    {
-        printf("\nCorrect answer\n");
-        return 1;
-    }
-    else
-    {
-        printf("\nWrong answer\n");
-        return 0;
-    }
-}
-
-int scoringSystem(int numberOfClues)
-{
-    if (numberOfClues == 0)
-    {
-        score += 0;
-    }
-    else
-    {
-        score += 10 / (5 - numberOfClues);
-    }
-    printf("Score: %d\n", score);
-    return score;
-}
+// char *haphazardly[] = ;
